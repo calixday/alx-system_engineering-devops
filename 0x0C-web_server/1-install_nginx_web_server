@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+!/usr/bin/env bash
 # Commands to install Nginx on Web-Sever-01
 
 # Updating Packages before making Installations
