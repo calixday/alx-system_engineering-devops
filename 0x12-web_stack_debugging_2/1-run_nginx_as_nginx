@@ -1,8 +1,20 @@
-#!/usr/bin/env bash
-# Fixes server bug
-chmod 644 /etc/nginx/nginx.conf
-sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
-sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
-pkill apache2
-# restart
-su nginx -s /bin/bash -c 'service nginx restart'
+#!/bin/bash
+
+# Stop Nginx if it's already running
+service nginx stop
+
+# Install nginx if not already installed
+apt-get update
+apt-get install nginx -y
+
+# Modify Nginx configuration to run as nginx user and listen on port 8080
+sed -i 's/user\s*nginx;/user nginx;/g' /etc/nginx/nginx.conf
+sed -i 's/listen\s*80;/listen 8080;/g' /etc/nginx/sites-available/default
+
+# Restart Nginx
+service nginx restart
+
+# Verify configuration
+ps aux | grep nginx
+nc -z 0 8080 && echo "Nginx is listening on port 8080"
+
