@@ -1,1 +1,3 @@
-README.md file
+# Install MYSQL
+
+Install Mysql Server on both servers
